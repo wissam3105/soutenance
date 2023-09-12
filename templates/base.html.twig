@@ -10,6 +10,15 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Inclusion des fichiers CSS de Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Inclusion des fichiers JavaScript de Bootstrap (y compris jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 
     <style>
         .bd-placeholder-img {
@@ -29,6 +38,7 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="{{asset('assets/css/carousel.css')}}" rel="stylesheet">
+
 </head>
 <body>
 <header>
@@ -40,21 +50,43 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('home')}}">Home</a>
+                    <a class="nav-link" href="{{ path('home')}}">Accueil</a>
                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('article')}}">Produits</a>
                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('article_new')}}">Ajouter produit</a>
+                    <a class="nav-link" href="{{ path('order')}}">Mes Commandes</a>
                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_contact')}}">Contact</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="{{ path('panier')}}"> 
+                    <i class="fa fa-shopping-cart "></i> Panier</a>
                
-            </ul>
-            {% if app.user %}
-             <a href="{{ path('account') }}">Mon compte</a> / <a href="{{ path ('app_logout')}}">deconnexion</a> 
+               
+            </ul> 
+             <ul>
+
+                 <li>
+            
+                   {% if app.user %}
+             <a href="{{ path('account') }}"><i class="fa fa-user-o"></i>Mon compte<small>({{app.user.firstname }})</small><br></a> <a href="{{path('logout')}}">Déconnexion</a>
             {% else %}
-            <a href="{{path('login')}}">connexion</a> / <a href="{{path('inscription')}}">inscription</a>
+             <a href="{{path('inscription')}}"> Inscription</a> <a href="{{path('login')}}"><i class="fa-duotone fa-pen fa-flip "></i>Connexion</a>
             {% endif %}
+           
+            </li>
+               
+                
+               
+
+            </li>
+            
+                </div>
+            </form>
+           
         </div>
     </nav>
 </header>
@@ -76,8 +108,8 @@
                 <div class="container">
                     <div class="carousel-caption text-left">
                         <h1>Lucette est Coquette</h1>
-                        <p>........</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -88,19 +120,17 @@
                 <div class="container">
                     <div class="carousel-caption">
                         <h1>Lucette est Coquette.</h1>
-                        <p>.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                        
                     </div>
                 </div>
             </div>
             <div class="carousel-item">
                {# <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>#}
                 
-                <img class="bd-placeholder-img" width="100%" height="100%" src="/assets/image3.jpg" /><div class="container">
+                <img class="bd-placeholder-img" width="100%" height="100%" src="/assets/home3.jpg" /><div class="container">
                     <div class="carousel-caption text-right">
                         <h1>.Lucette est Coquette</h1>
                         <p>.......</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
                     </div>
                 </div>
             </div>
@@ -132,8 +162,8 @@
 
     <!-- FOOTER -->
     <footer class="container">
-        <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p class="float-right"><a href="#">Retour</a></p>
+        <p>&copy; Lucette et Coquette &middot; <a href="#">Confidentialité</a> &middot; <a href="#">Termes</a></p>
     </footer>
 </main>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

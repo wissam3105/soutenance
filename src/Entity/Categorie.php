@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
  */
@@ -28,6 +29,13 @@ class Categorie
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="categorie")
      */
     private $articles;
+       // ... other properties and methods ...
+
+       public function __toString(): string
+       {
+           return $this->name; // Replace with the actual property you want to use as a string representation
+       }
+   
 
     public function __construct()
     {

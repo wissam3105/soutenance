@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Classe\Search;
+use App\Repository\ArticleRepository;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,8 +20,30 @@ class ArticleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
+        
         parent::__construct($registry, Article::class);
     }
+     /**
+     * @return Article []
+     */
+    public function findWithSearch(Search $search)
+{
+    $query = $this
+        ->createQueryBuilder('a')
+        ->select('a')
+        ->join('a.categorie', 'c'); // Use lowercase 'categorie', assuming it's the property name
+    
+    if (!empty($search->categories)) {
+        $query = $query
+            ->andWhere('c.id IN (:categories)')
+            ->setParameter('categories', $search->categories);
+    }
+    
+    return $query->getQuery()->getResult();
+}
+
+
+    
 
     // /**
     //  * @return Article[] Returns an array of Article objects

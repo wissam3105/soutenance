@@ -13,14 +13,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Form\SearchType;
+use App\Classe\Search;
+
 
 
 
 
 class ArticleController extends AbstractController
 {
-    public function __construct(EntityManagerInterface $em) {
+    public function __construct(EntityManagerInterface $em, ArticleRepository $articleRepository){
         $this->em = $em;
+        $this->articleRepository = $articleRepository;
     }
     /**
      * @Route("/article", name="article")
@@ -31,8 +35,20 @@ class ArticleController extends AbstractController
     {
         $articles = $articleRepository->findAll();
 
+        $search=new search();
+        $form = $this->createForm(SearchType::class, $search);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()&& $form->isValid()){
+            $articles = $this->articleRepository->findWithSearch($search);
+
+           
+        }
+        
+       
+
         return $this->render('article/produit.html.twig',[
-        'articles' => $articles
+        'articles' => $articles,
+        'form' => $form->createView(),
     ]);
     }
     /**

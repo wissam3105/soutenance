@@ -8,29 +8,25 @@ use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Classe\Cart; // Ajoutez l'importation de la classe Cart
 
 class PanierController extends AbstractController
 {
-    /**
-     * @Route("/panier", name="app_panier")
-     */
-    public function index(SessionInterface $session, ArticleRepository $articleRepository): Response
+    private $cart;
+
+    public function __construct(Cart $cart)
     {
-        $panier = $session->get('panier', []);
-        $panierData = [];
-
-        foreach($panier as $id => $quantite){
-            $panierData[] = [
-                'article' => $articleRepository->find($id),
-                'quantite' => $quantite
-            ];
-        }
-        $total = 0;
-
-        foreach($panierData as $art){
-            $totalArt = $art['article']->getPrix() * $art['quantite'];
-            $total += $totalArt;
-        }
+        $this->cart = $cart;
+    }
+   // ...
+    
+    /**
+     * @Route("/panier", name="panier")
+     */
+    public function index(): Response
+    {
+        $panierData = $this->cart->getCartContents();
+        $total = $this->cart->getTotal();
 
         return $this->render('panier/index.html.twig', [
             'panier' => $panierData,
@@ -39,34 +35,24 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/panier/add/{id}", name="app_panier_add")
+     * @Route("/panier/add/{id}", name="panier_add")
      */
-    public function add($id, SessionInterface $session)
+    public function add($id)
     {
-        $panier = $session->get('panier', []);
+        $this->cart->addToCart($id);
 
-        if(!empty($panier[$id])) {
-            $panier[$id]++ ;
-        }else{
-            $panier[$id] = 1;
-        };
-
-        $session->set('panier', $panier);
-
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('panier');
     }
 
     /**
-     * @Route("/panier/delete/{id}", name="app_panier_delete")
+     * @Route("/panier/delete/{id}", name="panier_delete")
      */
-    public function delete($id, SessionInterface $session)
+    public function delete($id)
     {
-        $panier = $session->get('panier', []);
+        $this->cart->removeFromCart($id);
 
-        if(!empty($panier[$id])) {
-            unset($panier[$id]);
-        }
-        $session->set('panier', $panier);
-        return $this->redirectToRoute("app_panier");
+        return $this->redirectToRoute("panier");
     }
+    
+    // ...
 }

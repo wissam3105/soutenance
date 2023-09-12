@@ -46,6 +46,7 @@ class Article
     {
         $this->createdAt = new \DateTime();
     }
+    
 
     public function getId(): ?int
     {
