@@ -27,7 +27,7 @@
    
    {% set formHtml %}
    
-   {{form_start (form,{action:path ('recap')} )}}
+   {{form_start (form,{action:path ('paiement')} )}}
    {{form_end (form)}}
    {% endset %}
     {{ formHtml|replace({'[br]': '</br>'})| raw }}
@@ -37,7 +37,7 @@
    <div class="col-md-6">
    <div class="order-summary">
   
-   <b>Recap de ma commande</b></br> <br>
+   <b>Recapitulatif de ma commande</b></br> <br>
    
        <table>
     <thead>

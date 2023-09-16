@@ -61,22 +61,25 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('app_contact')}}">Contact</a>
                </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="{{ path('panier')}}"> 
-                    <i class="fa fa-shopping-cart "></i> Panier</a>
+              
                
                
             </ul> 
              <ul>
 
                  <li>
+                 {% if is_granted('ROLE_ADMIN') %}
+    <a style="margin-right: 10px; color: #F7F9F9;" href="{{ path('admin') }}">Admin</a>
+{% endif %}
             
                    {% if app.user %}
-             <a href="{{ path('account') }}"><i class="fa fa-user-o"></i>Mon compte<small>({{app.user.firstname }})</small><br></a> <a href="{{path('logout')}}">Déconnexion</a>
+             <a  style="margin-right: 10px; color: #F7F9F9;" href="{{ path('account') }}"><i class="fa fa-user"></i>{{app.user.firstname }}</a> <a style=" 10px; color: #F7F9F9;"  href="{{path('logout')}}">Déconnexion</a>
             {% else %}
-             <a href="{{path('inscription')}}"> Inscription</a> <a href="{{path('login')}}"><i class="fa-duotone fa-pen fa-flip "></i>Connexion</a>
+             <a style="  color: #F7F9F9;"  href="{{path('inscription')}}"> Inscription</a> <a style=" 10px; color: #F7F9F9;"  href="{{path('login')}}"><i class="fa fa-user"></i>Connexion</a>
             {% endif %}
-           
+           <a style="margin-right: 10px; color: #F7F9F9;" href="{{ path('panier')}}"> 
+                    <i class="fa fa-shopping-cart "></i> Panier</a>
+                    
             </li>
                
                 
@@ -161,7 +164,11 @@
     </div><!-- /.container -->
 
     <!-- FOOTER -->
-    <footer class="container">
+    <footer class="container" style="
+    position: absolute;
+    bottom: 0; 
+    text-align: center; 
+">
         <p class="float-right"><a href="#">Retour</a></p>
         <p>&copy; Lucette et Coquette &middot; <a href="#">Confidentialité</a> &middot; <a href="#">Termes</a></p>
     </footer>
